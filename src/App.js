@@ -8,6 +8,12 @@ import { Ecommerce, Orders, Calendar, Employees, Stacked, Pyramid, Customers, Ka
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
+import Products from './pages/Products';
+import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProduct';
+import Category from './pages/Category';
+import User from './pages/User';
+
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -69,10 +75,15 @@ const App = () => {
                 <Route path="/ecommerce" element={(<Ecommerce />)} />
 
                 {/* pages  */}
+                <Route path="/products" element={<Products/>} />
+                <Route path="/products/add" element={<AddProduct/>} />
+                <Route path="/products/:idProduct" element={<EditProduct/>} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/customers" element={<Customers />} />
-
+                <Route path="/customers" element={<Customers />} />
+                <Route path="/user" element={<User />} />
+                <Route path="/category" element={<Category />} />
                 {/* apps  */}
                 <Route path="/kanban" element={<Kanban />} />
                 <Route path="/editor" element={<Editor />} />
@@ -88,7 +99,7 @@ const App = () => {
                 <Route path="/color-mapping" element={<ColorMapping />} />
                 <Route path="/pyramid" element={<Pyramid />} />
                 <Route path="/stacked" element={<Stacked />} />
-
+       
               </Routes>
             </div>
             <Footer />

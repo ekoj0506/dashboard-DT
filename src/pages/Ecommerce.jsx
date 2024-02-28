@@ -1,5 +1,5 @@
-import React from "react";
-import { BsCurrencyDollar } from "react-icons/bs";
+import React, { useEffect } from "react";
+import { BsBoxSeam, BsCurrencyDollar } from "react-icons/bs";
 import { GoPrimitiveDot } from "react-icons/go";
 import { IoIosMore } from "react-icons/io";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
@@ -16,6 +16,10 @@ import {
 } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
 import product9 from "../data/product9.jpg";
+import { useProducts } from "../contexts/ContextProduct";
+import { MdOutlineSupervisorAccount } from "react-icons/md";
+import { FiBarChart } from "react-icons/fi";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const DropDown = ({ currentMode }) => (
   <div className="w-28 border-1 border-color px-2 py-1 rounded-md">
@@ -33,7 +37,70 @@ const DropDown = ({ currentMode }) => (
 
 const Ecommerce = () => {
   const { currentColor, currentMode } = useStateContext();
+  const data=useProducts()
+  const {getAll,getStatis}=useProducts
+  console.log(data.productState.statisData)
+  // useEffect(() => {
+  //   let isMounted = true; // Biến để kiểm tra component có còn tồn tại hay không
 
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getStatis();
+  //       if (isMounted) {
+  //         // Kiểm tra biến isMounted trước khi cập nhật trạng thái
+  //         console.log(result);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   fetchData();return () => {
+  //     isMounted = false;
+  //   };
+  // }, [data.productState]);
+
+
+
+  const ecommerceData = [
+    {
+      icon: <MdOutlineSupervisorAccount />,
+      amount: data.productState.statisData?.user||0,
+      percentage: "+30%",
+      title: "Customers",
+      iconColor: "#03C9D7",
+      iconBg: "#E5FAFB",
+      pcColor: "red-600",
+    },
+    {
+      icon: <BsBoxSeam />,
+      amount: data.productState.statisData?.product||0,
+      percentage: "+23%",
+      title: "Products",
+      iconColor: "rgb(255, 244, 229)",
+      iconBg: "rgb(254, 201, 15)",
+      pcColor: "green-600",
+    },
+    {
+      icon: <FiBarChart />,
+      amount: data.productState.statisData?.product||0,
+      percentage: "+38%",
+      title: "Sales",
+      iconColor: "rgb(228, 106, 118)",
+      iconBg: "rgb(255, 244, 229)",
+  
+      pcColor: "green-600",
+    },
+    {
+      icon: <HiOutlineRefresh />,
+      amount: "0",
+      percentage: "0%",
+      title: "Refunds",
+      iconColor: "rgb(0, 194, 146)",
+      iconBg: "rgb(235, 250, 242)",
+      pcColor: "red-600",
+    },
+  ];
   return (
     <div className="mt-24">
       <div className="flex flex-wrap lg:flex-nowrap justify-center">
@@ -41,27 +108,27 @@ const Ecommerce = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="font-bold text-gray-400">Earnings</p>
-              <p className="text-2xl">$75,460.65</p>
+              <p className="text-2xl">{data.productState.statisData?.grandTotal.toLocaleString()}</p>
             </div>
-            <button
+            {/* <button
               type="button"
               style={{ backgroundColor: currentColor }}
               className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full  p-4"
             >
               <BsCurrencyDollar />
-            </button>
+            </button> */}
           </div>
           <div className="mt-6">
             <Button
               color="white"
               bgColor={currentColor}
-              text="Download"
+              text="See details"
               borderRadius="10px"
             />
           </div>
         </div>
         <div className="flex m-3 flex-wrap justify-center gap-6 items-center">
-          {earningData.map((item) => (
+          {ecommerceData.map((item) => (
             <div
               key={item.title}
               className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-48  p-6 pt-9 rounded-2xl "
@@ -108,7 +175,7 @@ const Ecommerce = () => {
             <div className=" border-r-1 border-color m-4 pr-10">
               <div>
                 <p>
-                  <span className="text-3xl font-semibold">$93,438</span>
+                  <span className="text-3xl font-semibold">đ93,438,000</span>
                   <span className="p-1.5 hover:drop-shadow-xl cursor-pointer rounded-full text-white bg-green-400 ml-3 text-xs">
                     23%
                   </span>
@@ -116,7 +183,7 @@ const Ecommerce = () => {
                 <p className="text-gray-500 mt-1">Budget</p>
               </div>
               <div className="mt-8">
-                <p className="text-3xl font-semibold">$48,487</p>
+                <p className="text-3xl font-semibold">đ48,487,000</p>
 
                 <p className="text-gray-500 mt-1">Expense</p>
               </div>
@@ -156,7 +223,7 @@ const Ecommerce = () => {
 
               <div>
                 <p className="text-2xl text-white font-semibold mt-8">
-                  $63,448.78
+                  đ{data.productState.statisData?.grandTotal.toLocaleString()}
                 </p>
                 <p className="text-gray-200">Monthly revenue</p>
               </div>
@@ -177,7 +244,7 @@ const Ecommerce = () => {
 
           <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl md:w-400 p-8 m-3 flex justify-center items-center gap-10">
             <div>
-              <p className="text-2xl font-semibold ">$43,246</p>
+              <p className="text-2xl font-semibold ">đ{data.productState.statisData?.grandTotal.toLocaleString()}</p>
               <p className="text-gray-400">Yearly sales</p>
             </div>
 
@@ -197,7 +264,7 @@ const Ecommerce = () => {
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
           <div className="flex justify-between items-center gap-2">
             <p className="text-xl font-semibold">Recent Transactions</p>
-            <DropDown currentMode={currentMode} />
+        
           </div>
           <div className="mt-10 w-72 md:w-[350px]">
             {recentTransactions.map((item) => (
@@ -238,7 +305,7 @@ const Ecommerce = () => {
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-760">
           <div className="flex justify-between items-center gap-2 mb-10">
             <p className="text-xl font-semibold">Sales Overview</p>
-            <DropDown currentMode={currentMode} />
+            
           </div>
           <div className="md:w-full overflow-auto">
             <LineChart />

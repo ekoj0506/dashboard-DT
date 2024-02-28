@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AiOutlineCalendar,
   AiOutlineShoppingCart,
   AiOutlineAreaChart,
   AiOutlineBarChart,
   AiOutlineStock,
+  AiOutlineDeliveredProcedure,
+  AiFillSkin,
 } from "react-icons/ai";
 import {
   FiShoppingBag,
@@ -25,7 +27,7 @@ import {
 } from "react-icons/bs";
 import { BiColorFill } from "react-icons/bi";
 import { IoMdContacts } from "react-icons/io";
-import { RiContactsLine, RiStockLine } from "react-icons/ri";
+import { RiContactsLine, RiLoader2Fill, RiStockLine } from "react-icons/ri";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { TiTick } from "react-icons/ti";
@@ -43,30 +45,91 @@ import product5 from "./product5.jpg";
 import product6 from "./product6.jpg";
 import product7 from "./product7.jpg";
 import product8 from "./product8.jpg";
+import { useStateContext } from "../contexts/ContextProvider";
 
+import { Link } from 'react-router-dom';
+import { responseDeleteProductApi } from "../apis";
+import { useProducts } from "../contexts/ContextProduct";
 export const gridOrderImage = (props) => (
-  <div>
+  <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'} }>
     <img
-      className="rounded-xl h-20 md:ml-3"
-      src={props.ProductImage}
+      className="rounded-xl h-20"
+      style={{justifyContent:"center"}}
+      src={props.image}
       alt="order-item"
     />
   </div>
 );
-
+export const gridOrderImage2 = (props) => (
+  <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'} }>
+    <img
+      className="rounded-xl h-20"
+      style={{justifyContent:"center"}}
+      src={props.image[0]}
+      alt="order-item"
+    />
+  </div>
+);
 export const gridOrderStatus = (props) => (
   <button
     type="button"
-    style={{ background: props.StatusBg }}
+    style={{ background: '#32CD32' }}
     className="text-white py-1 px-2 capitalize rounded-2xl text-md"
   >
-    {props.Status}
+    {props.status}
   </button>
+);
+export const gridOrderDetail = (props) => (
+
+  <button
+    type="button"
+    style={{ background: '#808080',color:'white',opacity:'',borderRadius:'4px' }}
+    className=" py-1 px-2 capitalize text-md"
+  >
+    
+See details
+  </button>
+);
+
+
+export const gridProductDetail = (props) => (
+  <div style={{display:'flex',flexDirection: 'column'}}>
+    {/* <button
+      type="button"
+      style={{ background: '#808080', color: 'white', borderRadius: '4px' }}
+      className="py-1 px-2 capitalize text-md"
+      onClick={() => window.location.href = `/product/${'sdsd'}`}
+    >
+      Edit product222
+    </button> */}
+       <Link to={`/products/${props._id}`} className="btn btn-primary" style={{marginBottom:'5px'}} >   <button
+    type="button"
+    style={{ background: '#808080',color:'white',opacity:'',borderRadius:'4px' }}
+    className=" py-1 px-2 capitalize text-md"
+  >
+      Edit
+    </button></Link> 
+    <Link to={`/products/`}>
+      <button
+    type="button"
+    style={{ background: '#B22222',color:'white',opacity:'',borderRadius:'4px' }}
+    className=" py-1 px-2 capitalize text-md"
+    onClick={()=>{ responseDeleteProductApi(props._id)
+  
+  }
+   
+  }
+    
+  >
+      Delete
+      
+    </button> </Link>
+    </div>
 );
 
 export const kanbanGrid = [
   { headerText: "To Do", keyField: "Open", allowToggle: true },
-
+  { headerText: "success", keyField: "Success", allowToggle: true },
   { headerText: "In Progress", keyField: "InProgress", allowToggle: true },
 
   {
@@ -521,81 +584,48 @@ export const links = [
   },
 
   {
-    title: "Pages",
+    title: "Site Administration",
     links: [
       {
         name: "orders",
         icon: <AiOutlineShoppingCart />,
       },
       {
-        name: "employees",
-        icon: <IoMdContacts />,
+        name: "products",
+        icon: <AiFillSkin />,
       },
+  
       {
-        name: "customers",
-        icon: <RiContactsLine />,
-      },
-    ],
-  },
-  {
-    title: "Apps",
-    links: [
-      {
-        name: "calendar",
-        icon: <AiOutlineCalendar />,
-      },
-      {
-        name: "kanban",
-        icon: <BsKanban />,
-      },
-      {
-        name: "editor",
-        icon: <FiEdit />,
-      },
-      {
-        name: "color-picker",
-        icon: <BiColorFill />,
-      },
-    ],
-  },
-  {
-    title: "Charts",
-    links: [
-      {
-        name: "line",
-        icon: <AiOutlineStock />,
-      },
-      {
-        name: "area",
-        icon: <AiOutlineAreaChart />,
+        name: "category",
+        icon: <RiLoader2Fill />,
       },
 
       {
-        name: "bar",
-        icon: <AiOutlineBarChart />,
+        name: "User",
+        icon: <IoMdContacts />,
       },
       {
-        name: "pie",
-        icon: <FiPieChart />,
+        name: "Brand",
+        icon: <RiLoader2Fill />,
       },
       {
-        name: "financial",
-        icon: <RiStockLine />,
-      },
-      {
-        name: "color-mapping",
-        icon: <BsBarChart />,
-      },
-      {
-        name: "pyramid",
-        icon: <GiLouvrePyramid />,
-      },
-      {
-        name: "stacked",
-        icon: <AiOutlineBarChart />,
+        name: "Banner",
+        icon: <RiLoader2Fill />,
       },
     ],
   },
+  // {
+  //   title: "Apps",
+  //   links: [
+    
+  //     {
+  //       name: "editor",
+  //       icon: <FiEdit />,
+  //     },
+  
+  //   ],
+  // },
+ 
 ];
 
 export const cartData = [
@@ -689,7 +719,7 @@ export const earningData = [
 export const recentTransactions = [
   {
     icon: <BsCurrencyDollar />,
-    amount: "+$350",
+    amount: "+đ350,000,000",
     title: "Paypal Transfer",
     desc: "Money Added",
     iconColor: "#03C9D7",
@@ -698,7 +728,7 @@ export const recentTransactions = [
   },
   {
     icon: <BsShield />,
-    amount: "-$560",
+    amount: "-đ0",
     desc: "Bill Payment",
     title: "Wallet",
     iconColor: "rgb(0, 194, 146)",
@@ -707,7 +737,7 @@ export const recentTransactions = [
   },
   {
     icon: <FiCreditCard />,
-    amount: "+$350",
+    amount: "+đ0",
     title: "Credit Card",
     desc: "Money reversed",
     iconColor: "rgb(255, 244, 229)",
@@ -717,7 +747,7 @@ export const recentTransactions = [
   },
   {
     icon: <TiTick />,
-    amount: "+$350",
+    amount: "+đ0",
     title: "Bank Transfer",
     desc: "Money Added",
 
@@ -727,7 +757,7 @@ export const recentTransactions = [
   },
   {
     icon: <BsCurrencyDollar />,
-    amount: "-$50",
+    amount: "-đ0",
     percentage: "+38%",
     title: "Refund",
     desc: "Payment Sent",
@@ -740,7 +770,7 @@ export const recentTransactions = [
 export const weeklyStats = [
   {
     icon: <FiShoppingCart />,
-    amount: "-$560",
+    amount: "-đ0",
     title: "Top Sales",
     desc: "Johnathan Doe",
     iconBg: "#FB9678",
@@ -748,7 +778,7 @@ export const weeklyStats = [
   },
   {
     icon: <FiStar />,
-    amount: "-$560",
+    amount: "-đ0",
     title: "Best Seller",
     desc: "MaterialPro Admin",
     iconBg: "rgb(254, 201, 15)",
@@ -756,7 +786,7 @@ export const weeklyStats = [
   },
   {
     icon: <BsChatLeft />,
-    amount: "+$560",
+    amount: "+đ0",
     title: "Most Commented",
     desc: "Ample Admin",
     iconBg: "#00C292",
@@ -893,57 +923,233 @@ export const userProfileData = [
     iconBg: "rgb(254, 201, 15)",
   },
 ];
-
+// id: item._id,
+// receiver: item.address.name,
+// total:item.grandTotal,
+// creatAt: item.creatAt||1704540302800,
+// products: item.products[0].title,
 export const ordersGrid = [
+
   {
-    headerText: "Image",
-    template: gridOrderImage,
-    textAlign: "Center",
-    width: "120",
-  },
-  {
-    field: "OrderItems",
-    headerText: "Item",
-    width: "150",
+    field: "id",
+    headerText: "Order Id",
+    width: "100",
     editType: "dropdownedit",
     textAlign: "Center",
   },
   {
-    field: "CustomerName",
-    headerText: "Customer Name",
+    field: "receiver",
+    headerText: "Receiver",
+    width: "100",
+    textAlign: "Center",
+  },
+  {
+    field: "total",
+    headerText: "Total Amount",
+    
+    textAlign: "Center",
+    editType: "numericedit",
+    width: "80",
+  },
+
+
+  {
+    field: "address",
+    headerText: "Address",
     width: "150",
     textAlign: "Center",
   },
   {
-    field: "TotalAmount",
-    headerText: "Total Amount",
-    format: "C2",
-    textAlign: "Center",
-    editType: "numericedit",
+    field: "products",
+    headerText: "Products",
     width: "150",
+    textAlign: "Center",
   },
   {
     headerText: "Status",
     template: gridOrderStatus,
-    field: "OrderItems",
+    field: "status",
+    textAlign: "Center",
+    width: "80",
+  },
+  {
+    headerText: "Act",
+    template: gridOrderDetail,
+    
+    textAlign: "Center",
+    width: "80",
+  },
+];
+export const ProductsGrid = [
+  {
+    headerText: "Image",
+    field:"image",
+    template: gridOrderImage2,
+    isPrimaryKey:true,
     textAlign: "Center",
     width: "120",
   },
   {
-    field: "OrderID",
-    headerText: "Order ID",
+    field: "categoryName",
+    headerText: "Category",
+    width: "130",
+
+    textAlign: "Center",
+  },
+  {
+    field: "title",
+    headerText: "Name",
+    width: "130",
+    textAlign: "Center",
+  },
+  {
+    field: "brand",
+    headerText: "Brand",
+    format: "C2",
+    textAlign: "Center",
+    editType: "dropdownedit",
+    width: "150",
+  },
+  {
+    field: "price",
+    headerText: "price",
     width: "120",
+    editType: "numericedit",
     textAlign: "Center",
   },
 
   {
-    field: "Location",
-    headerText: "Location",
+    field: "numofpus",
+    headerText: "Num of Pus",
+
+    width: "150",
+    textAlign: "Center",
+  },
+  ,
+
+  {
+    field: "act",
+    headerText: "Act",
+    template: gridProductDetail,
+    width: "150",
+    textAlign: "Center",
+  },
+];
+export const UserGrid = [
+  // {
+  //   headerText: "Image",
+  //   field:"image",
+  //   template: gridOrderImage2,
+  //   isPrimaryKey:true,
+  //   textAlign: "Center",
+  //   width: "120",
+  // },
+  {
+    field: "_id",
+    headerText: "Id",
+    width: "130",
+
+    textAlign: "Center",
+  },
+  {
+    field: "email",
+    headerText: "Email",
+    width: "130",
+    textAlign: "Center",
+  },
+  {
+    field: "lastName",
+    headerText: "Name",
+    format: "C2",
+    textAlign: "Center",
+    editType: "dropdownedit",
+    width: "150",
+  },
+  {
+    field: "createAt",
+    headerText: "Create",
+    width: "120",
+    formatter: (value) => { if (typeof value === 'number' && !isNaN(value)) {
+      const dateObject = new Date(value);
+
+      // Kiểm tra xem đối tượng ngày có hợp lý không
+      if (!isNaN(dateObject.getDate())) {
+        const day = dateObject.getDate();
+        const month = dateObject.getMonth() + 1;
+        const year = dateObject.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+    }
+
+    // Trả về chuỗi mặc định nếu giá trị không hợp lý
+    return 'Invalid Date';
+    },
+
+
+    textAlign: "Center",
+  },
+  
+  {
+    field: "role",
+    headerText: "Role",
+    width: "120",
+    editType: "numericedit",
+    textAlign: "Center",
+    default:"Subscriber "
+  },
+  {
+    field: "act",
+    headerText: "Act",
+    template: gridProductDetail,
     width: "150",
     textAlign: "Center",
   },
 ];
 
+export const CategoryGrid = [
+
+
+  {
+    field: "_id",
+    headerText: "Id",
+    width: "130",
+    textAlign: "Center",
+  },
+  {
+    field: "categoryName",
+    headerText: "Name",
+    width: "130",
+
+    textAlign: "Center",
+  },
+ 
+  {
+    field: "description",
+    headerText: "Description",
+    format: "C2",
+    textAlign: "Center",
+    editType: "dropdownedit",
+    width: "150",
+  },
+  {
+    headerText: "Image description",
+    field:"image",
+    template: gridOrderImage,
+    isPrimaryKey:true,
+    textAlign: "Center",
+    width: "120",
+  },
+  
+  
+
+  {
+    field: "act",
+    headerText: "Act",
+    template: gridProductDetail,
+    width: "150",
+    textAlign: "Center",
+  },
+];
 export const customersData = [
   {
     CustomerID: 1001,
