@@ -22,7 +22,7 @@ export const OrderProdvider = ({ children }) => {
 
       const { status, data } = await axios({
         method: "GET",
-        url: "http://localhost:8017/v1/order",
+        url: "https://bedutu.onrender.com/v1/order",
       });
       console.log(status,'dataaaaaa', data)
       if (status === 200) {

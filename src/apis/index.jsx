@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useProducts } from '../contexts/ContextProduct';
 export const responseLoginApi = async(dataUser)=>
 {  try{
-    const infoUser= await axiosInstance.post(`http://${env.SERVER_HOST}:${env>SERVER_PORT}/v1/user/signin`, dataUser)
+    const infoUser= await axiosInstance.post(`https://bedutu.onrender.com/v1/user/signin`, dataUser)
     console.log(infoUser)
     return infoUser.data
 }
@@ -30,7 +30,7 @@ export const responseAddProductApi = async(dataProduct)=>
         })
         console.log(dataProduct,'777777777777')
     console.log('eeeeeeeeeeee222',process.env.REACT_APP_SERVER_HOST,'adasds',`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HOST}/v1/products/product`)
-    const infoProduct= await axiosInstance.post(`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}/v1/product/products`, dataProduct)
+    const infoProduct= await axiosInstance.post(`https://bedutu.onrender.com/v1/product/products`, dataProduct)
     console.log(infoProduct)
     if (infoProduct.status==201){ toast.update(id, { render: "Success", type: "success", isLoading: false,autoClose: 5000, }) 
 
@@ -57,7 +57,7 @@ export const responseEditProductApi = async(dataProduct, idProduct)=>
         })
         console.log(dataProduct,'777777777777')
     console.log('eeeeeeeeeeee222',process.env.REACT_APP_SERVER_HOST,'adasds',`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HOST}/v1/products/product`)
-    const infoProduct= await axiosInstance.post(`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}/v1/product/${idProduct}`, dataProduct)
+    const infoProduct= await axiosInstance.post(`https://bedutu.onrender.com/v1/product/${idProduct}`, dataProduct)
     console.log(infoProduct)
     if (infoProduct.status==201){ toast.update(id, { render: "Success", type: "success", isLoading: false,autoClose: 2000, }) 
   
@@ -75,7 +75,7 @@ export const getDetailProduct= async (idProduct) => {
      console.log('idProduct',idProduct)
       const { status, data } = await axios({
         method: "GET",
-        url: `http://localhost:8017/v1/product/${idProduct}`,
+        url: `https://bedutu.onrender.com/v1/product/${idProduct}`,
       });
       console.log(status,'dataaaaaa', data)
       if (status === 200) {
@@ -100,7 +100,7 @@ export const getDetailProduct= async (idProduct) => {
         })
     
     console.log('eeeeeeeeeeee222',process.env.REACT_APP_SERVER_HOST,'adasds',`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_HOST}/v1/products/product`)
-    const infoProduct= await axiosInstance.delete(`http://${process.env.REACT_APP_SERVER_HOST}:${process.env.REACT_APP_SERVER_PORT}/v1/product/${idProduct}`)
+    const infoProduct= await axiosInstance.delete(`https://bedutu.onrender.com/v1/product/${idProduct}`)
     console.log(infoProduct)
  
     if (infoProduct.status==201){ toast.update(id, { render: "Success", type: "success", isLoading: false,autoClose: 2000, }) 

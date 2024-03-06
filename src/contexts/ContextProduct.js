@@ -27,7 +27,7 @@ export const ProductProdvider = ({ children }) => {
 
       const { status, data } = await axios({
         method: "GET",
-        url: "http://localhost:8017/v1/product/products",
+        url: "https://bedutu.onrender.com/v1/product/products",
       });
       console.log(status,'dataaaaaa', data)
       if (status === 200) {
@@ -44,7 +44,7 @@ export const ProductProdvider = ({ children }) => {
       productDispatch({type: 'categories_loading', payload: true})
       const { status, data } = await axios({
         method: "GET",
-        url: "http://localhost:8017/v1/category",
+        url: "https://bedutu.onrender.com/v1/category",
       });
       if (status === 200) {
         productDispatch({ type: "set_category", payload: data });
@@ -59,7 +59,7 @@ export const ProductProdvider = ({ children }) => {
       productDispatch({type: 'user_loading', payload: true})
       const { status, data } = await axios({
         method: "GET",
-        url: "http://localhost:8017/v1/user/allUser",
+        url: "https://bedutu.onrender.com/v1/user/allUser",
       });
       if (status === 200) {
         console.log(data,'data')
@@ -77,7 +77,7 @@ export const ProductProdvider = ({ children }) => {
       productDispatch({type: 'statis_loading', payload: true})
       const { status, data } = await axios({
         method: "GET",
-        url: "http://localhost:8017/v1/statis",
+        url: "https://bedutu.onrender.com/v1/statis",
       });
       if (status === 200) {
         console.log(data,'data')
